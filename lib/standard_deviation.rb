@@ -1,9 +1,11 @@
 ages = [24, 30, 18, 20, 41]
 
+def average(numbers)
+  numbers.inject(:+).to_f / numbers.length
+end
+
 def std_dev(numbers)
-  numbers[0] = numbers[0].to_f # Make sure there's a float in there
-  average = numbers.inject(:+) / numbers.length # Get the sum
-  # do the rest of the math
+  average = average(numbers)
   Math.sqrt(numbers.map {|e| (e - average) ** 2 }.inject(:+) / numbers.length)
 end
 
