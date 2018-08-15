@@ -1,7 +1,7 @@
 require 'minitest/autorun'
 require 'minitest/pride'
-require './lib/games'
-require './lib/event'
+require '../lib/games'
+require '../lib/event'
 
 class GamesTest < Minitest::Test
   def test_it_exists
