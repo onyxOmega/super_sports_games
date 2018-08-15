@@ -53,14 +53,13 @@ class GamesTest < Minitest::Test
   end
 
   def test_it_can_create_a_summary_for_the_games
-    skip
     curling = Event.new("Curling", [24, 30, 18, 20, 41])
     ring_toss = Event.new("Ring Toss", [23, 22, 29, 18, 30])
     games = Games.new(2017)
     games.add_event(curling)
     games.add_event(ring_toss)
 
-    expected = "Event          Max Age             Min Age             Average Age         StdDev Age\n"
+    expected = "Event          Max Age             Min Age             Average Age         StdDev Age\n" +
                "Curling        41                  18                  26.6                8.28\n" +
                "Ring Toss      30                  18                  24.4                4.5"
 
