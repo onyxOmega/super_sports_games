@@ -1,17 +1,22 @@
+require "./games"
+
 class EventPlanner
   def initialize
-    @events = []
-    @year
+    puts "Please enter the year."
+    print ">> "
+    year = gets.chomp.to_i
+    @games = Games.new(year)
+    puts "Welcome to the #{year} Super Sports Games planning committee."
+    self.run_loop
   end
-
 
   def run_loop
     while true
       input = get_main_selection
       if input.downcase == "quit" || input.downcase == "q"
-        break
+        return
       elsif input == "1"
-        @events << create_new_event
+        @games.events << create_new_event
       elsif input == "2"
         cancel_existing_event
       elsif input == "3"
@@ -34,15 +39,15 @@ class EventPlanner
 
 
   def create_new_event
-    if @events.length <= 10
+    if @games.events.length <= 10
       input = get_event_info
       name = input[0]
       ages = ages_to_int(input[1])
       new_event = Event.new(name, ages)
     else
-      puts "There are too many events to add more!",
+      puts "There are too many games.events to add more!",
            "Maybe you should cancel one."
-      puts @events.length
+      puts @games.events.length
     end
   end
 
@@ -68,7 +73,7 @@ class EventPlanner
 
   def cancel_existing_event
     canceled = nil
-    if @events.length > 0
+    if @games.events.length > 0
       selection = get_cancel_selection.to_i
       if verify_cancel(selection)
         canceled = cancel_event(selection)
@@ -77,7 +82,7 @@ class EventPlanner
         elipse
       end
     else
-      print "There are no events to cancel"
+      print "There are no games.events to cancel"
       elipse
     end
     canceled
@@ -87,16 +92,15 @@ class EventPlanner
   def get_cancel_selection
     while true
       puts "Select an event to cancel. "
-      @events.each_with_index do |event, index|
+      @games.events.each_with_index do |event, index|
         puts "#{index + 1}: #{event.name}"
       end
       print ">> "
       selection = gets.chomp.to_i - 1
-      if 0 <= selection && selection < @events.length
+      if 0 <= selection && selection < @games.events.length
         return selection
       else
-        print "Invalid selection"
-        elipse
+        display_invalid
       end
     end
   end
@@ -104,7 +108,7 @@ class EventPlanner
 
   def verify_cancel(selection)
     while true
-      puts "Are you sure you want to cancel #{@events[selection].name}?(y/n)"
+      puts "Are you sure you want to cancel #{@games.events[selection].name}?(y/n)"
       print ">> "
       verify = gets.chomp
       if verify.downcase == "y"
@@ -112,22 +116,30 @@ class EventPlanner
       elsif verify.downcase == "n"
         return false
       else
-        print "Invalid selection"
-        elipse
+        display_invalid
       end
     end
   end
 
 
   def cancel_event(selection)
-    canceled = @events[selection]
-    @events.delete_at(selection)
+    canceled = @games.events[selection]
+    @games.remove_event(selection)
     canceled # return the cancelled event
   end
 
 
   def display_event_summary
-    puts "chose 1"
+    if @games.events.length > 0
+      puts "\n"
+      print @games.summary
+      puts "\n"
+      elipse
+      puts "\n"
+    else
+      print "No events have are scheduled."
+      elipse
+    end
   end
 
 
@@ -138,10 +150,10 @@ class EventPlanner
 
 
   def elipse
-    sleep(0.4)
+    sleep 0.4
     3.times do
       print "."
-      sleep(0.7)
+      sleep 0.4
     end
     puts "\n\n"
   end

@@ -11,6 +11,10 @@ class Games
     @events << event
   end
 
+  def remove_event(index)
+    @events.delete_at(index)
+  end
+
   def summary
     headers + "\n" + all_events_summary
   end
