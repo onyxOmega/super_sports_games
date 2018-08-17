@@ -19,6 +19,10 @@ class Event
 
   def standard_deviation_age
     avg = average_age
-    Math.sqrt(ages.map {|e| (e - avg) ** 2 }.sum / ages.length).round(2)
+    diff_squared = ages.map do |age|
+      (age - avg) ** 2
+    end
+    quotient = diff_squared.sum / ages.length
+    Math.sqrt(quotient).round(2)
   end
 end
