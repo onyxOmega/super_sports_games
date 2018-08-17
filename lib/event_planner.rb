@@ -82,7 +82,7 @@ class EventPlanner
         elipse
       end
     else
-      print "There are no games.events to cancel"
+      print "No events are scheduled."
       elipse
     end
     canceled
@@ -137,7 +137,7 @@ class EventPlanner
       elipse
       puts "\n"
     else
-      print "No events have are scheduled."
+      print "No events are scheduled."
       elipse
     end
   end
