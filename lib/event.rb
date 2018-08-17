@@ -14,7 +14,7 @@ class Event
   end
 
   def average_age
-    @ages.sum.to_f / @ages.length
+    (@ages.sum.to_f / @ages.length).round(2)
   end
 
   def standard_deviation_age
